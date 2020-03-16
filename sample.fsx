@@ -26,6 +26,7 @@ let allData =
     |> Seq.map Daily.Load
     |> Seq.collect(fun data -> data.Rows)
     |> Seq.distinctBy (fun row -> row.``Country/Region``, row.``Province/State``, row.``Last Update``.Date)
+    |> Seq.sortBy (fun row -> row.``Last Update``.Date)
     |> Seq.filter(fun row -> row.``Country/Region`` <> "Others")
 
 let cleanseCountry (country:string) =
