@@ -27,7 +27,7 @@ let allData =
     |> Seq.collect(fun data -> data.Rows)
     |> Seq.distinctBy (fun row -> row.``Country/Region``, row.``Province/State``, row.``Last Update``.Date)
     |> Seq.sortBy (fun row -> row.``Last Update``.Date)
-    |> Seq.filter(fun row -> row.``Country/Region`` <> "Others")
+    |> Seq.filter (fun row -> row.``Country/Region`` <> "Others")
 
 let cleanseCountry (country:string) =
     match country.Trim() with
@@ -55,9 +55,7 @@ let confirmedByCountryDaily = seq {
 
 let topTen =
     confirmedByCountryDaily
-    |> Seq.sortByDescending(fun (_, rows) ->
-        let (_, confirmed) = rows |> Seq.last
-        confirmed)
+    |> Seq.sortByDescending(fun (_, rows) -> rows |> Seq.map snd |> Seq.max)
     |> Seq.skip 1
     |> Seq.take 10
 
