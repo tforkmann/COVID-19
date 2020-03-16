@@ -55,9 +55,7 @@ let confirmedByCountryDaily = seq {
 
 let topTen =
     confirmedByCountryDaily
-    |> Seq.sortByDescending(fun (_, rows) ->
-        let (_, confirmed) = rows |> Seq.last
-        confirmed)
+    |> Seq.sortByDescending(fun (_, rows) -> rows |> Seq.map snd |> Seq.max)
     |> Seq.skip 1
     |> Seq.take 10
 
